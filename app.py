@@ -233,15 +233,7 @@ st.markdown("<div class='form-title-outside'>🧾 Datos del cliente</div>", unsa
 # ============================================================
 # FORMULARIO EN CUADRO BLANCO (sin título adentro)
 # ============================================================
-with st.container():
-    st.markdown("""
-    <div style="background: rgba(255, 255, 255, 0.95);
-                padding: 2.5rem;
-                border-radius: 24px;
-                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-                border: 2px solid rgba(255,255,255,0.3);
-                margin-bottom: 2rem;">
-    """, unsafe_allow_html=True)
+
 
     col1, col2 = st.columns(2)
 
