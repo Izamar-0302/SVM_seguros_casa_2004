@@ -6,7 +6,7 @@ import streamlit as st
 import joblib
 
 # ============================================================
-# CONFIGURACIÓN DE PÁGINA
+# CONFIGURACIÓN
 # ============================================================
 st.set_page_config(
     page_title="Riesgo Actuarial IA",
@@ -16,79 +16,66 @@ st.set_page_config(
 )
 
 # ============================================================
-# CSS PERSONALIZADO
+# CSS (NO CAMBIA)
 # ============================================================
-st.markdown("""
-    <style>
-        html, body, [class*="css"] {
-            font-family: 'Poppins', sans-serif;
-        }
+st.markdown("""<style>
+html, body {font-family: 'Poppins', sans-serif;}
 
-        .main-title {
-            text-align: center;
-            color: #1E88E5;
-            font-size: 2.2rem;
-            font-weight: 700;
-        }
+.main-title {
+    text-align:center;
+    color:#1E88E5;
+    font-size:2.2rem;
+    font-weight:700;
+}
 
-        .subtitle {
-            text-align: center;
-            color: #546E7A;
-            margin-bottom: 2rem;
-        }
+.subtitle {
+    text-align:center;
+    color:#546E7A;
+    margin-bottom:2rem;
+}
 
-        .result-card {
-            background: linear-gradient(135deg, #E3F2FD, #BBDEFB);
-            padding: 2rem;
-            border-radius: 20px;
-            text-align: center;
-            margin-top: 2rem;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-        }
+.result-card {
+    background: linear-gradient(135deg, #E3F2FD, #BBDEFB);
+    padding:2rem;
+    border-radius:20px;
+    text-align:center;
+    margin-top:2rem;
+}
 
-        .cluster-badge {
-            display: inline-block;
-            padding: 0.6rem 1.5rem;
-            border-radius: 50px;
-            background: #1976D2;
-            color: white;
-            font-weight: bold;
-            font-size: 1.2rem;
-            margin-top: 1rem;
-        }
-
-        .footer {
-            text-align: center;
-            color: #9E9E9E;
-            margin-top: 3rem;
-            font-size: 0.8rem;
-        }
-    </style>
-""", unsafe_allow_html=True)
+.cluster-badge {
+    display:inline-block;
+    padding:0.6rem 1.5rem;
+    border-radius:50px;
+    background:#1976D2;
+    color:white;
+    font-weight:bold;
+    font-size:1.2rem;
+}
+</style>""", unsafe_allow_html=True)
 
 # ============================================================
-# HEADER
+# MODELOS (CORREGIDO AQUÍ)
 # ============================================================
-st.markdown("<h1 class='main-title'>📊 Clasificador de Riesgo Actuarial</h1>", unsafe_allow_html=True)
-st.markdown("<p class='subtitle'>IA-ISC • KMeans + Pipeline • 2026</p>", unsafe_allow_html=True)
 
-# ============================================================
-# MODELO
-# ============================================================
-MODEL_PATH = Path("models/kmeans_riesgo_actuarial.pkl")
+MODEL_DIR = Path("models")
+
+PREPROCESSOR_PATH = MODEL_DIR / "preprocessor.pkl"
+KMEANS_PATH = MODEL_DIR / "kmeans_riesgo_actuarial.pkl"
 
 @st.cache_resource
-def cargar_modelo():
-    if MODEL_PATH.exists():
-        return joblib.load(MODEL_PATH)
-    st.error("❌ No se encontró el modelo en /models")
-    st.stop()
+def cargar_modelos():
+    preprocessor = joblib.load(PREPROCESSOR_PATH)
+    kmeans = joblib.load(KMEANS_PATH)
+    return preprocessor, kmeans
 
-modelo = cargar_modelo()
+preprocessor, modelo = cargar_modelos()
 
 # ============================================================
-# INTERFAZ DE ENTRADA
+# UI
 # ============================================================
+st.markdown("<h1 class='main-title'>📊 Clasificador de Riesgo Actuarial</h1>", unsafe_allow_html=True)
+st.markdown("<p class='subtitle'>IA-ISC • KMeans + ML • 2026</p>", unsafe_allow_html=True)
+
 st.markdown("### 🧾 Datos del cliente")
 
 col1, col2 = st.columns(2)
@@ -106,7 +93,7 @@ with col2:
 charges = st.number_input("Gastos médicos", 0, 100000, 5000)
 
 # ============================================================
-# BOTÓN DE PREDICCIÓN
+# PREDICCIÓN (CORREGIDO AQUÍ TAMBIÉN)
 # ============================================================
 if st.button("🔍 Predecir riesgo"):
 
@@ -120,9 +107,11 @@ if st.button("🔍 Predecir riesgo"):
         "charges": charges
     }])
 
-    cluster = modelo.predict(cliente)[0]
+    # 🔥 CORRECCIÓN CLAVE (ANTES ERA SOLO modelo.predict)
+    X_transformed = preprocessor.transform(cliente)
+    cluster = modelo.predict(X_transformed)[0]
 
-    # Interpretación simple (ajústalo si tienes mapa_riesgo)
+    # interpretación
     interpretacion = {
         0: "Riesgo Bajo 🟢",
         1: "Riesgo Medio 🟡",
@@ -132,25 +121,22 @@ if st.button("🔍 Predecir riesgo"):
 
     resultado = interpretacion.get(cluster, f"Cluster {cluster}")
 
-    # ============================================================
-    # RESULTADO
-    # ============================================================
     st.markdown(f"""
         <div class="result-card">
             <h3>Resultado del análisis</h3>
             <div class="cluster-badge">{resultado}</div>
-            <p style="margin-top:1rem;">Cluster asignado: {cluster}</p>
+            <p>Cluster asignado: {cluster}</p>
         </div>
     """, unsafe_allow_html=True)
 
 else:
-    st.info("Ingrese los datos del cliente y presione **Predecir riesgo**")
+    st.info("Ingrese los datos del cliente y presione Predecir riesgo")
 
 # ============================================================
 # FOOTER
 # ============================================================
 st.markdown("""
-    <div class="footer">
-        📊 Sistema de Riesgo Actuarial con IA • Proyecto ISC 2026
-    </div>
+<div style="text-align:center; margin-top:3rem; color:#9E9E9E;">
+📊 Sistema de Riesgo Actuarial con IA • ISC 2026
+</div>
 """, unsafe_allow_html=True)
