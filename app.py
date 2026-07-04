@@ -88,7 +88,7 @@ html, body, [data-testid="stAppViewContainer"], [data-testid="stApp"] {
 [data-testid="stNumberInput"] label,
 [data-testid="stRadio"] label,
 [data-testid="stSelectbox"] label {
-    color: #0d47a1 !important;
+    color: #ffffff !important;
     font-weight: 700 !important;
     font-size: 1rem !important;
 }
