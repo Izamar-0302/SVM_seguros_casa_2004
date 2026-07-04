@@ -6,7 +6,7 @@ import streamlit as st
 import joblib
 
 # ============================================================
-# CONFIGURACIÓN
+# CONFIGURACIÓN DE PÁGINA
 # ============================================================
 st.set_page_config(
     page_title="Riesgo Actuarial IA",
@@ -16,42 +16,67 @@ st.set_page_config(
 )
 
 # ============================================================
-# CSS (NO CAMBIA)
+# CSS (DEL DISEÑO BONITO DE FLORES)
 # ============================================================
-st.markdown("""<style>
-html, body {font-family: 'Poppins', sans-serif;}
+st.markdown("""
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+        
+        html, body, [class*="css"] {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .main-title {
+            text-align: center;
+            color: #2E7D32;
+            font-weight: 700;
+            font-size: 2.2rem;
+            margin-bottom: 0.3rem;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #558B2F;
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .result-card {
+            background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            box-shadow: 0 8px 32px rgba(46, 125, 50, 0.15);
+            border: 1px solid #A5D6A7;
+            text-align: center;
+        }
+        
+        .winner-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #2E7D32, #43A047);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.3rem;
+            box-shadow: 0 4px 15px rgba(46, 125, 50, 0.3);
+            margin-top: 1rem;
+        }
+    </style>
+""", unsafe_allow_html=True)
 
-.main-title {
-    text-align:center;
-    color:#1E88E5;
-    font-size:2.2rem;
-    font-weight:700;
-}
+# ============================================================
+# HEADER (FLORES STYLE)
+# ============================================================
+st.markdown('<div style="font-size:3rem; text-align:center;">📊</div>', unsafe_allow_html=True)
+st.markdown('<h1 class="main-title">Clasificador de Riesgo Actuarial</h1>', unsafe_allow_html=True)
+st.markdown('<p class="subtitle">IA-ISC • KMeans + Pipeline • 2026</p>', unsafe_allow_html=True)
 
-.subtitle {
-    text-align:center;
-    color:#546E7A;
-    margin-bottom:2rem;
-}
-
-.result-card {
-    background: linear-gradient(135deg, #E3F2FD, #BBDEFB);
-    padding:2rem;
-    border-radius:20px;
-    text-align:center;
-    margin-top:2rem;
-}
-
-.cluster-badge {
-    display:inline-block;
-    padding:0.6rem 1.5rem;
-    border-radius:50px;
-    background:#1976D2;
-    color:white;
-    font-weight:bold;
-    font-size:1.2rem;
-}
-</style>""", unsafe_allow_html=True)
+st.markdown("""
+    <div style="text-align: center; color: #616161; margin-bottom: 2rem;">
+        🧠 Sistema inteligente de análisis de riesgo de clientes
+    </div>
+""", unsafe_allow_html=True)
 
 # ============================================================
 # MODELOS
@@ -70,11 +95,8 @@ def cargar_modelos():
 preprocessor, modelo = cargar_modelos()
 
 # ============================================================
-# UI
+# INPUTS
 # ============================================================
-st.markdown("<h1 class='main-title'>📊 Clasificador de Riesgo Actuarial</h1>", unsafe_allow_html=True)
-st.markdown("<p class='subtitle'>IA-ISC • KMeans + ML • 2026</p>", unsafe_allow_html=True)
-
 st.markdown("### 🧾 Datos del cliente")
 
 col1, col2 = st.columns(2)
@@ -82,7 +104,6 @@ col1, col2 = st.columns(2)
 with col1:
     age = st.number_input("Edad", 18, 100, 30)
 
-    # 🔥 CAMBIO: ahora no se puede escribir
     sex = st.radio(
         "Sexo",
         ["male", "female"],
@@ -94,7 +115,6 @@ with col1:
 with col2:
     children = st.number_input("Hijos", 0, 10, 0)
 
-    # 🔥 CAMBIO: ahora no se puede escribir
     smoker = st.radio(
         "Fumador",
         ["yes", "no"],
@@ -134,8 +154,9 @@ if st.button("🔍 Predecir riesgo"):
 
     st.markdown(f"""
         <div class="result-card">
-            <h3>Resultado del análisis</h3>
-            <div class="cluster-badge">{resultado}</div>
+            <div style="font-size:3rem;">📊</div>
+            <div class="winner-badge">{resultado}</div>
+            <p style="margin-top:1rem;">Cluster asignado: {cluster}</p>
         </div>
     """, unsafe_allow_html=True)
 
@@ -146,7 +167,7 @@ else:
 # FOOTER
 # ============================================================
 st.markdown("""
-<div style="text-align:center; margin-top:3rem; color:#9E9E9E;">
-📊 Sistema de Riesgo Actuarial con IA • ISC 2026
-</div>
+    <div style="text-align:center; margin-top:3rem; color:#9E9E9E;">
+        📊 Sistema de Riesgo Actuarial con IA • ISC 2026
+    </div>
 """, unsafe_allow_html=True)
