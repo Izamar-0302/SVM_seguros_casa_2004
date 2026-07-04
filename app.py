@@ -57,6 +57,16 @@ html, body, [data-testid="stAppViewContainer"], [data-testid="stApp"] {
     margin-bottom: 2.5rem;
 }
 
+/* ─── TÍTULO "DATOS DEL CLIENTE" FUERA DEL CUADRO ─── */
+.form-title-outside {
+    color: #ffffff;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-align: center;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
 /* ─── CUADRO DEL FORMULARIO (TARJETA BLANCA) ─── */
 .form-card {
     background: rgba(255, 255, 255, 0.95);
@@ -66,15 +76,6 @@ html, body, [data-testid="stAppViewContainer"], [data-testid="stApp"] {
     border: 2px solid rgba(255,255,255,0.3);
     backdrop-filter: blur(10px);
     margin-bottom: 2rem;
-}
-
-/* ─── TÍTULO DENTRO DEL FORMULARIO ─── */
-.form-card h3 {
-    color: #0d47a1 !important;
-    font-size: 1.4rem;
-    margin-bottom: 1.5rem;
-    border-bottom: 2px solid #e3f2fd;
-    padding-bottom: 0.8rem;
 }
 
 /* Labels de todos los inputs */
@@ -193,16 +194,6 @@ hr {
     background: rgba(255,255,255,0.2);
     margin: 2rem 0;
 }
-
-/* ─── OCULTAR ELEMENTOS VACÍOS GENERADOS POR STREAMLIT ─── */
-[data-testid="stMarkdownContainer"]:empty,
-div:empty.stMarkdown,
-.stMarkdown:has(> div:only-child:empty) {
-    display: none !important;
-    height: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-}
 </style>
 """, unsafe_allow_html=True)
 
@@ -235,9 +226,13 @@ def cargar_modelos():
 preprocessor, modelo = cargar_modelos()
 
 # ============================================================
-# FORMULARIO EN CUADRO BLANCO (sin div de cierre problemático)
+# TÍTULO DEL FORMULARIO AFUERA DEL CUADRO
 # ============================================================
-# Usamos st.container() en lugar de div manual para evitar elementos vacíos
+st.markdown("<div class='form-title-outside'>🧾 Datos del cliente</div>", unsafe_allow_html=True)
+
+# ============================================================
+# FORMULARIO EN CUADRO BLANCO (sin título adentro)
+# ============================================================
 with st.container():
     st.markdown("""
     <div style="background: rgba(255, 255, 255, 0.95);
@@ -246,10 +241,6 @@ with st.container():
                 box-shadow: 0 20px 60px rgba(0,0,0,0.3);
                 border: 2px solid rgba(255,255,255,0.3);
                 margin-bottom: 2rem;">
-    <h3 style="color: #0d47a1; font-size: 1.4rem; margin-bottom: 1.5rem; 
-               border-bottom: 2px solid #e3f2fd; padding-bottom: 0.8rem;">
-        🧾 Datos del cliente
-    </h3>
     """, unsafe_allow_html=True)
 
     col1, col2 = st.columns(2)
