@@ -6,7 +6,7 @@ import streamlit as st
 import joblib
 
 # ============================================================
-# CONFIGURACIÓN DE PÁGINA
+# CONFIGURACIÓN
 # ============================================================
 st.set_page_config(
     page_title="Riesgo Actuarial IA",
@@ -16,66 +16,85 @@ st.set_page_config(
 )
 
 # ============================================================
-# CSS (DEL DISEÑO BONITO DE FLORES)
+# CSS NUEVO (AZUL + FORMULARIO DESTACADO)
 # ============================================================
 st.markdown("""
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
-        
-        html, body, [class*="css"] {
-            font-family: 'Poppins', sans-serif;
-        }
-        
-        .main-title {
-            text-align: center;
-            color: #2E7D32;
-            font-weight: 700;
-            font-size: 2.2rem;
-            margin-bottom: 0.3rem;
-        }
-        
-        .subtitle {
-            text-align: center;
-            color: #558B2F;
-            font-size: 1rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .result-card {
-            background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
-            border-radius: 20px;
-            padding: 1.5rem;
-            margin-top: 1.5rem;
-            box-shadow: 0 8px 32px rgba(46, 125, 50, 0.15);
-            border: 1px solid #A5D6A7;
-            text-align: center;
-        }
-        
-        .winner-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #2E7D32, #43A047);
-            color: white;
-            padding: 0.5rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 1.3rem;
-            box-shadow: 0 4px 15px rgba(46, 125, 50, 0.3);
-            margin-top: 1rem;
-        }
-    </style>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+html, body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #e3f2fd, #f5f9ff);
+}
+
+/* TÍTULO */
+.main-title {
+    text-align: center;
+    color: #0d47a1;
+    font-size: 2.4rem;
+    font-weight: 700;
+}
+
+.subtitle {
+    text-align: center;
+    color: #546e7a;
+    margin-bottom: 2rem;
+}
+
+/* TARJETA DEL FORMULARIO */
+.form-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border: 1px solid #bbdefb;
+}
+
+/* RESULTADO */
+.result-card {
+    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+    padding: 2rem;
+    border-radius: 20px;
+    text-align: center;
+    margin-top: 2rem;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+.cluster-badge {
+    display: inline-block;
+    padding: 0.6rem 1.5rem;
+    border-radius: 50px;
+    background: #1976d2;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+/* BOTÓN */
+.stButton>button {
+    background: #1976d2;
+    color: white;
+    border-radius: 10px;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    border: none;
+}
+.stButton>button:hover {
+    background: #0d47a1;
+}
+</style>
 """, unsafe_allow_html=True)
 
 # ============================================================
-# HEADER (FLORES STYLE)
+# HEADER
 # ============================================================
-st.markdown('<div style="font-size:3rem; text-align:center;">📊</div>', unsafe_allow_html=True)
-st.markdown('<h1 class="main-title">Clasificador de Riesgo Actuarial</h1>', unsafe_allow_html=True)
-st.markdown('<p class="subtitle">IA-ISC • KMeans + Pipeline • 2026</p>', unsafe_allow_html=True)
+st.markdown("<h1 class='main-title'>📊 Clasificador de Riesgo Actuarial</h1>", unsafe_allow_html=True)
+st.markdown("<p class='subtitle'>IA-ISC • KMeans + Pipeline • 2026</p>", unsafe_allow_html=True)
 
 st.markdown("""
-    <div style="text-align: center; color: #616161; margin-bottom: 2rem;">
-        🧠 Sistema inteligente de análisis de riesgo de clientes
-    </div>
+<div style="text-align:center; color:#607d8b; margin-bottom:2rem;">
+Sistema inteligente de análisis de riesgo de clientes aseguradores
+</div>
 """, unsafe_allow_html=True)
 
 # ============================================================
@@ -95,8 +114,10 @@ def cargar_modelos():
 preprocessor, modelo = cargar_modelos()
 
 # ============================================================
-# INPUTS
+# FORMULARIO (DESTACADO EN TARJETA)
 # ============================================================
+st.markdown("<div class='form-card'>", unsafe_allow_html=True)
+
 st.markdown("### 🧾 Datos del cliente")
 
 col1, col2 = st.columns(2)
@@ -121,9 +142,14 @@ with col2:
         horizontal=True
     )
 
-    region = st.selectbox("Región", ["southeast", "southwest", "northeast", "northwest"])
+    region = st.selectbox(
+        "Región",
+        ["southeast", "southwest", "northeast", "northwest"]
+    )
 
 charges = st.number_input("Gastos médicos", 0, 100000, 5000)
+
+st.markdown("</div>", unsafe_allow_html=True)
 
 # ============================================================
 # PREDICCIÓN
@@ -155,7 +181,7 @@ if st.button("🔍 Predecir riesgo"):
     st.markdown(f"""
         <div class="result-card">
             <div style="font-size:3rem;">📊</div>
-            <div class="winner-badge">{resultado}</div>
+            <div class="cluster-badge">{resultado}</div>
             <p style="margin-top:1rem;">Cluster asignado: {cluster}</p>
         </div>
     """, unsafe_allow_html=True)
@@ -167,7 +193,7 @@ else:
 # FOOTER
 # ============================================================
 st.markdown("""
-    <div style="text-align:center; margin-top:3rem; color:#9E9E9E;">
-        📊 Sistema de Riesgo Actuarial con IA • ISC 2026
-    </div>
+<div style="text-align:center; margin-top:3rem; color:#90a4ae;">
+📊 Sistema de Riesgo Actuarial con IA • ISC 2026
+</div>
 """, unsafe_allow_html=True)
