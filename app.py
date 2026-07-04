@@ -201,13 +201,9 @@ hr {
 # HEADER
 # ============================================================
 st.markdown("<h1 class='main-title'>📊 Clasificador de Riesgo Actuarial</h1>", unsafe_allow_html=True)
-st.markdown("<p class='subtitle'>IA-ISC • KMeans + Pipeline • 2026</p>", unsafe_allow_html=True)
+st.markdown("<p class='subtitle'>IA-ISC • Angeles Euceda • 20221930061 • 2026</p>", unsafe_allow_html=True)
 
-st.markdown("""
-<div class="description">
-Sistema inteligente de análisis de riesgo de clientes aseguradores
-</div>
-""", unsafe_allow_html=True)
+
 
 # ============================================================
 # MODELOS
