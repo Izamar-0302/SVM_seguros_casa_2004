@@ -16,7 +16,7 @@ st.set_page_config(
 )
 
 # ============================================================
-# CSS MEJORADO (LABELS VISIBLES + SIN TABLA VACÍA)
+# CSS (FONDO AZUL + FORMULARIO EN CUADRO BLANCO)
 # ============================================================
 st.markdown("""
 <style>
@@ -77,11 +77,7 @@ html, body, [data-testid="stAppViewContainer"], [data-testid="stApp"] {
     padding-bottom: 0.8rem;
 }
 
-/* ═══════════════════════════════════════════════════════════
-   🔥 LABELS DEL FORMULARIO EN AZUL OSCURO (VISIBLES)
-   ═══════════════════════════════════════════════════════════ */
-
-/* Labels de todos los inputs - AZUL OSCURO para que se vean */
+/* Labels de todos los inputs */
 .stNumberInput label,
 .stRadio label,
 .stSelectbox label,
@@ -96,7 +92,7 @@ html, body, [data-testid="stAppViewContainer"], [data-testid="stApp"] {
     font-size: 1rem !important;
 }
 
-/* Texto de los radio buttons (male, female, yes, no) - AZUL OSCURO */
+/* Texto de los radio buttons (male, female, yes, no) */
 .stRadio [role="radiogroup"] label,
 .stRadio [data-testid="stMarkdownContainer"] p,
 .stRadio span[data-baseweb="radio"] div,
@@ -111,7 +107,7 @@ html, body, [data-testid="stAppViewContainer"], [data-testid="stApp"] {
     color: #333333 !important;
 }
 
-/* Input numbers - texto dentro del campo */
+/* Input numbers */
 .stNumberInput input {
     color: #333333 !important;
     font-weight: 600 !important;
@@ -197,6 +193,16 @@ hr {
     background: rgba(255,255,255,0.2);
     margin: 2rem 0;
 }
+
+/* ─── OCULTAR ELEMENTOS VACÍOS GENERADOS POR STREAMLIT ─── */
+[data-testid="stMarkdownContainer"]:empty,
+div:empty.stMarkdown,
+.stMarkdown:has(> div:only-child:empty) {
+    display: none !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -229,42 +235,53 @@ def cargar_modelos():
 preprocessor, modelo = cargar_modelos()
 
 # ============================================================
-# FORMULARIO EN CUADRO BLANCO
+# FORMULARIO EN CUADRO BLANCO (sin div de cierre problemático)
 # ============================================================
-st.markdown("<div class='form-card'>", unsafe_allow_html=True)
+# Usamos st.container() en lugar de div manual para evitar elementos vacíos
+with st.container():
+    st.markdown("""
+    <div style="background: rgba(255, 255, 255, 0.95);
+                padding: 2.5rem;
+                border-radius: 24px;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                border: 2px solid rgba(255,255,255,0.3);
+                margin-bottom: 2rem;">
+    <h3 style="color: #0d47a1; font-size: 1.4rem; margin-bottom: 1.5rem; 
+               border-bottom: 2px solid #e3f2fd; padding-bottom: 0.8rem;">
+        🧾 Datos del cliente
+    </h3>
+    """, unsafe_allow_html=True)
 
-st.markdown("### 🧾 Datos del cliente")
+    col1, col2 = st.columns(2)
 
-col1, col2 = st.columns(2)
+    with col1:
+        age = st.number_input("Edad", 18, 100, 30)
 
-with col1:
-    age = st.number_input("Edad", 18, 100, 30)
+        sex = st.radio(
+            "Sexo",
+            ["male", "female"],
+            horizontal=True
+        )
 
-    sex = st.radio(
-        "Sexo",
-        ["male", "female"],
-        horizontal=True
-    )
+        bmi = st.number_input("BMI", 10.0, 60.0, 25.0)
 
-    bmi = st.number_input("BMI", 10.0, 60.0, 25.0)
+    with col2:
+        children = st.number_input("Hijos", 0, 10, 0)
 
-with col2:
-    children = st.number_input("Hijos", 0, 10, 0)
+        smoker = st.radio(
+            "Fumador",
+            ["yes", "no"],
+            horizontal=True
+        )
 
-    smoker = st.radio(
-        "Fumador",
-        ["yes", "no"],
-        horizontal=True
-    )
+        region = st.selectbox(
+            "Región",
+            ["southeast", "southwest", "northeast", "northwest"]
+        )
 
-    region = st.selectbox(
-        "Región",
-        ["southeast", "southwest", "northeast", "northwest"]
-    )
+    charges = st.number_input("Gastos médicos", 0, 100000, 5000)
 
-charges = st.number_input("Gastos médicos", 0, 100000, 5000)
-
-st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # ============================================================
 # PREDICCIÓN
