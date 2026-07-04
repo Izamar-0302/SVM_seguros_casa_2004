@@ -295,7 +295,6 @@ if st.button("🔍 Predecir riesgo"):
             <div style="font-size:3.5rem; margin-bottom:0.5rem;">📊</div>
             <div style="color:#0d47a1; font-size:1.2rem; font-weight:600; margin-bottom:0.5rem;">Resultado del análisis</div>
             <div class="cluster-badge">{resultado}</div>
-            <p style="margin-top:1.5rem; color:#546e7a; font-size:1rem;">Cluster asignado: <strong>{cluster}</strong></p>
         </div>
     """, unsafe_allow_html=True)
 
