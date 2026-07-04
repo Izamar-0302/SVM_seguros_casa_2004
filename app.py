@@ -16,71 +16,155 @@ st.set_page_config(
 )
 
 # ============================================================
-# CSS NUEVO (AZUL + FORMULARIO DESTACADO)
+# CSS MEJORADO (FONDO AZUL + FORMULARIO EN CUADRO)
 # ============================================================
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
-html, body {
+/* ─── FONDO AZUL DE TODA LA PÁGINA ─── */
+html, body, [data-testid="stAppViewContainer"], [data-testid="stApp"] {
+    background: linear-gradient(135deg, #0d47a1 0%, #1976d2 40%, #42a5f5 100%) !important;
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #e3f2fd, #f5f9ff);
 }
 
-/* TÍTULO */
+/* ─── CONTENEDOR PRINCIPAL ─── */
+[data-testid="stAppViewContainer"] {
+    background: linear-gradient(135deg, #0d47a1 0%, #1976d2 40%, #42a5f5 100%) !important;
+}
+
+/* ─── TÍTULO ─── */
 .main-title {
     text-align: center;
-    color: #0d47a1;
-    font-size: 2.4rem;
+    color: #ffffff;
+    font-size: 2.8rem;
     font-weight: 700;
+    text-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    margin-bottom: 0.5rem;
 }
 
 .subtitle {
     text-align: center;
-    color: #546e7a;
+    color: #bbdefb;
+    font-size: 1.1rem;
+    font-weight: 400;
     margin-bottom: 2rem;
 }
 
-/* TARJETA DEL FORMULARIO */
-.form-card {
-    background: white;
-    padding: 2rem;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    border: 1px solid #bbdefb;
+.description {
+    text-align: center;
+    color: #e3f2fd;
+    font-size: 1rem;
+    margin-bottom: 2.5rem;
 }
 
-/* RESULTADO */
+/* ─── CUADRO DEL FORMULARIO (TARJETA BLANCA) ─── */
+.form-card {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2.5rem;
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    border: 2px solid rgba(255,255,255,0.3);
+    backdrop-filter: blur(10px);
+    margin-bottom: 2rem;
+}
+
+/* ─── TÍTULO DENTRO DEL FORMULARIO ─── */
+.form-card h3 {
+    color: #0d47a1;
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid #e3f2fd;
+    padding-bottom: 0.8rem;
+}
+
+/* ─── INPUTS ─── */
+.stNumberInput label, .stRadio label, .stSelectbox label {
+    color: #1565c0 !important;
+    font-weight: 600 !important;
+}
+
+.stNumberInput input, .stSelectbox select {
+    border-radius: 12px !important;
+    border: 2px solid #bbdefb !important;
+    background: #f5f9ff !important;
+}
+
+.stRadio [role="radiogroup"] {
+    gap: 1rem;
+}
+
+/* ─── BOTÓN PREDECIR ─── */
+.stButton > button {
+    background: linear-gradient(135deg, #1976d2, #0d47a1) !important;
+    color: white !important;
+    border-radius: 14px !important;
+    padding: 0.8rem 2rem !important;
+    font-weight: 700 !important;
+    font-size: 1.1rem !important;
+    border: none !important;
+    box-shadow: 0 8px 25px rgba(13, 71, 161, 0.4) !important;
+    transition: all 0.3s ease !important;
+    width: 100% !important;
+}
+
+.stButton > button:hover {
+    background: linear-gradient(135deg, #0d47a1, #1565c0) !important;
+    box-shadow: 0 12px 35px rgba(13, 71, 161, 0.6) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* ─── RESULTADO ─── */
 .result-card {
-    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-    padding: 2rem;
-    border-radius: 20px;
+    background: linear-gradient(135deg, #ffffff, #e3f2fd);
+    padding: 2.5rem;
+    border-radius: 24px;
     text-align: center;
     margin-top: 2rem;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    box-shadow: 0 15px 50px rgba(0,0,0,0.25);
+    border: 2px solid rgba(255,255,255,0.5);
+    animation: fadeInUp 0.6s ease;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
 .cluster-badge {
     display: inline-block;
-    padding: 0.6rem 1.5rem;
+    padding: 0.8rem 2rem;
     border-radius: 50px;
-    background: #1976d2;
+    background: linear-gradient(135deg, #1976d2, #0d47a1);
     color: white;
     font-weight: bold;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
+    box-shadow: 0 6px 20px rgba(13, 71, 161, 0.4);
+    margin-top: 1rem;
 }
 
-/* BOTÓN */
-.stButton>button {
-    background: #1976d2;
-    color: white;
-    border-radius: 10px;
-    padding: 0.5rem 1rem;
-    font-weight: 600;
-    border: none;
+/* ─── INFO BOX ─── */
+.stAlert {
+    background: rgba(255,255,255,0.15) !important;
+    color: #e3f2fd !important;
+    border: 1px solid rgba(255,255,255,0.3) !important;
+    border-radius: 16px !important;
 }
-.stButton>button:hover {
-    background: #0d47a1;
+
+/* ─── FOOTER ─── */
+.footer-text {
+    text-align: center;
+    margin-top: 3rem;
+    color: rgba(255,255,255,0.7);
+    font-size: 0.9rem;
+}
+
+/* ─── DIVIDER ─── */
+hr {
+    border: none;
+    height: 1px;
+    background: rgba(255,255,255,0.2);
+    margin: 2rem 0;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -92,7 +176,7 @@ st.markdown("<h1 class='main-title'>📊 Clasificador de Riesgo Actuarial</h1>",
 st.markdown("<p class='subtitle'>IA-ISC • KMeans + Pipeline • 2026</p>", unsafe_allow_html=True)
 
 st.markdown("""
-<div style="text-align:center; color:#607d8b; margin-bottom:2rem;">
+<div class="description">
 Sistema inteligente de análisis de riesgo de clientes aseguradores
 </div>
 """, unsafe_allow_html=True)
@@ -114,7 +198,7 @@ def cargar_modelos():
 preprocessor, modelo = cargar_modelos()
 
 # ============================================================
-# FORMULARIO (DESTACADO EN TARJETA)
+# FORMULARIO EN CUADRO BLANCO
 # ============================================================
 st.markdown("<div class='form-card'>", unsafe_allow_html=True)
 
@@ -180,20 +264,21 @@ if st.button("🔍 Predecir riesgo"):
 
     st.markdown(f"""
         <div class="result-card">
-            <div style="font-size:3rem;">📊</div>
+            <div style="font-size:3.5rem; margin-bottom:0.5rem;">📊</div>
+            <div style="color:#0d47a1; font-size:1.2rem; font-weight:600; margin-bottom:0.5rem;">Resultado del análisis</div>
             <div class="cluster-badge">{resultado}</div>
-            <p style="margin-top:1rem;">Cluster asignado: {cluster}</p>
+            <p style="margin-top:1.5rem; color:#546e7a; font-size:1rem;">Cluster asignado: <strong>{cluster}</strong></p>
         </div>
     """, unsafe_allow_html=True)
 
 else:
-    st.info("Ingrese los datos del cliente y presione Predecir riesgo")
+    st.info("Ingrese los datos del cliente y presione **Predecir riesgo**")
 
 # ============================================================
 # FOOTER
 # ============================================================
 st.markdown("""
-<div style="text-align:center; margin-top:3rem; color:#90a4ae;">
+<div class="footer-text">
 📊 Sistema de Riesgo Actuarial con IA • ISC 2026
 </div>
 """, unsafe_allow_html=True)
