@@ -54,9 +54,8 @@ html, body {font-family: 'Poppins', sans-serif;}
 </style>""", unsafe_allow_html=True)
 
 # ============================================================
-# MODELOS (CORREGIDO AQUÍ)
+# MODELOS
 # ============================================================
-
 MODEL_DIR = Path("models")
 
 PREPROCESSOR_PATH = MODEL_DIR / "preprocessor.pkl"
@@ -82,18 +81,32 @@ col1, col2 = st.columns(2)
 
 with col1:
     age = st.number_input("Edad", 18, 100, 30)
-    sex = st.selectbox("Sexo", ["male", "female"])
+
+    # 🔥 CAMBIO: ahora no se puede escribir
+    sex = st.radio(
+        "Sexo",
+        ["male", "female"],
+        horizontal=True
+    )
+
     bmi = st.number_input("BMI", 10.0, 60.0, 25.0)
 
 with col2:
     children = st.number_input("Hijos", 0, 10, 0)
-    smoker = st.selectbox("Fumador", ["yes", "no"])
+
+    # 🔥 CAMBIO: ahora no se puede escribir
+    smoker = st.radio(
+        "Fumador",
+        ["yes", "no"],
+        horizontal=True
+    )
+
     region = st.selectbox("Región", ["southeast", "southwest", "northeast", "northwest"])
 
 charges = st.number_input("Gastos médicos", 0, 100000, 5000)
 
 # ============================================================
-# PREDICCIÓN (CORREGIDO AQUÍ TAMBIÉN)
+# PREDICCIÓN
 # ============================================================
 if st.button("🔍 Predecir riesgo"):
 
@@ -107,11 +120,9 @@ if st.button("🔍 Predecir riesgo"):
         "charges": charges
     }])
 
-    # 🔥 CORRECCIÓN CLAVE (ANTES ERA SOLO modelo.predict)
     X_transformed = preprocessor.transform(cliente)
     cluster = modelo.predict(X_transformed)[0]
 
-    # interpretación
     interpretacion = {
         0: "Riesgo Bajo 🟢",
         1: "Riesgo Medio 🟡",
