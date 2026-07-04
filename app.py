@@ -16,7 +16,7 @@ st.set_page_config(
 )
 
 # ============================================================
-# CSS MEJORADO (FONDO AZUL + FORMULARIO EN CUADRO)
+# CSS MEJORADO (TODO EL TEXTO DEL FORMULARIO EN BLANCO)
 # ============================================================
 st.markdown("""
 <style>
@@ -28,7 +28,6 @@ html, body, [data-testid="stAppViewContainer"], [data-testid="stApp"] {
     font-family: 'Poppins', sans-serif;
 }
 
-/* ─── CONTENEDOR PRINCIPAL ─── */
 [data-testid="stAppViewContainer"] {
     background: linear-gradient(135deg, #0d47a1 0%, #1976d2 40%, #42a5f5 100%) !important;
 }
@@ -71,27 +70,55 @@ html, body, [data-testid="stAppViewContainer"], [data-testid="stApp"] {
 
 /* ─── TÍTULO DENTRO DEL FORMULARIO ─── */
 .form-card h3 {
-    color: #0d47a1;
+    color: #ffffff !important;
     font-size: 1.4rem;
     margin-bottom: 1.5rem;
-    border-bottom: 2px solid #e3f2fd;
+    border-bottom: 2px solid rgba(255,255,255,0.4);
     padding-bottom: 0.8rem;
 }
 
-/* ─── INPUTS ─── */
-.stNumberInput label, .stRadio label, .stSelectbox label {
-    color: #1565c0 !important;
+/* ═══════════════════════════════════════════════════════════
+   🔥 TODOS LOS TEXTOS DEL FORMULARIO EN BLANCO
+   ═══════════════════════════════════════════════════════════ */
+
+/* Labels de todos los inputs */
+.stNumberInput label,
+.stRadio label,
+.stSelectbox label,
+.stNumberInput > div > label,
+.stRadio > div > label,
+.stSelectbox > div > label,
+[data-testid="stNumberInput"] label,
+[data-testid="stRadio"] label,
+[data-testid="stSelectbox"] label {
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    font-size: 1rem !important;
+}
+
+/* Texto de los radio buttons (male, female, yes, no) */
+.stRadio [role="radiogroup"] label,
+.stRadio [data-testid="stMarkdownContainer"] p,
+.stRadio span[data-baseweb="radio"] div,
+.stRadio div[role="radio"] {
+    color: #ffffff !important;
+}
+
+/* Opciones del selectbox */
+.stSelectbox [data-testid="stMarkdownContainer"] p,
+.stSelectbox div[data-baseweb="select"] span {
+    color: #333333 !important;
+}
+
+/* Input numbers */
+.stNumberInput input {
+    color: #333333 !important;
     font-weight: 600 !important;
 }
 
-.stNumberInput input, .stSelectbox select {
-    border-radius: 12px !important;
-    border: 2px solid #bbdefb !important;
-    background: #f5f9ff !important;
-}
-
-.stRadio [role="radiogroup"] {
-    gap: 1rem;
+/* Placeholder y texto dentro de inputs */
+.stNumberInput input::placeholder {
+    color: #999999 !important;
 }
 
 /* ─── BOTÓN PREDECIR ─── */
