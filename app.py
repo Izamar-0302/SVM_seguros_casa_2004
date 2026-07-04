@@ -78,7 +78,7 @@ html, body, [data-testid="stAppViewContainer"], [data-testid="stApp"] {
     margin-bottom: 2rem;
 }
 
-/* Labels de todos los inputs */
+/* ─── LABELS EN BLANCO (para que resalten sobre fondo azul) ─── */
 .stNumberInput label,
 .stRadio label,
 .stSelectbox label,
@@ -88,38 +88,40 @@ html, body, [data-testid="stAppViewContainer"], [data-testid="stApp"] {
 [data-testid="stNumberInput"] label,
 [data-testid="stRadio"] label,
 [data-testid="stSelectbox"] label {
-    color: #0d47a1 !important;
+    color: #ffffff !important;
     font-weight: 700 !important;
     font-size: 1rem !important;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3) !important;
 }
 
-/* Texto de los radio buttons (male, female, yes, no) */
+/* Texto de los radio buttons (male, female, yes, no) - también en blanco */
 .stRadio [role="radiogroup"] label,
 .stRadio [data-testid="stMarkdownContainer"] p,
 .stRadio span[data-baseweb="radio"] div,
 .stRadio div[role="radio"] {
-    color: #1565c0 !important;
+    color: #ffffff !important;
     font-weight: 600 !important;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3) !important;
 }
 
-/* Opciones del selectbox */
+/* Opciones del selectbox - en blanco */
 .stSelectbox [data-testid="stMarkdownContainer"] p,
 .stSelectbox div[data-baseweb="select"] span {
-    color: #333333 !important;
+    color: #ffffff !important;
 }
 
-/* Input numbers */
+/* Input numbers - fondo semitransparente, texto blanco */
 .stNumberInput input {
-    color: #333333 !important;
+    color: #ffffff !important;
     font-weight: 600 !important;
-    background: #f5f9ff !important;
-    border: 2px solid #bbdefb !important;
+    background: rgba(255,255,255,0.15) !important;
+    border: 2px solid rgba(255,255,255,0.4) !important;
     border-radius: 12px !important;
 }
 
 /* Placeholder y texto dentro de inputs */
 .stNumberInput input::placeholder {
-    color: #999999 !important;
+    color: rgba(255,255,255,0.6) !important;
 }
 
 /* ─── BOTÓN PREDECIR ─── */
@@ -229,38 +231,38 @@ st.markdown("<div class='form-title-outside'>🧾 Datos del cliente</div>", unsa
 # ============================================================
 # FORMULARIO EN CUADRO BLANCO (sin título adentro)
 # ============================================================
-with st.container():
+st.markdown("<div class='form-card'>", unsafe_allow_html=True)
 
-    col1, col2 = st.columns(2)
+col1, col2 = st.columns(2)
 
-    with col1:
-        age = st.number_input("Edad", 18, 100, 30)
+with col1:
+    age = st.number_input("Edad", 18, 100, 30)
 
-        sex = st.radio(
-            "Sexo",
-            ["male", "female"],
-            horizontal=True
-        )
+    sex = st.radio(
+        "Sexo",
+        ["male", "female"],
+        horizontal=True
+    )
 
-        bmi = st.number_input("BMI", 10.0, 60.0, 25.0)
+    bmi = st.number_input("BMI", 10.0, 60.0, 25.0)
 
-    with col2:
-        children = st.number_input("Hijos", 0, 10, 0)
+with col2:
+    children = st.number_input("Hijos", 0, 10, 0)
 
-        smoker = st.radio(
-            "Fumador",
-            ["yes", "no"],
-            horizontal=True
-        )
+    smoker = st.radio(
+        "Fumador",
+        ["yes", "no"],
+        horizontal=True
+    )
 
-        region = st.selectbox(
-            "Región",
-            ["southeast", "southwest", "northeast", "northwest"]
-        )
+    region = st.selectbox(
+        "Región",
+        ["southeast", "southwest", "northeast", "northwest"]
+    )
 
-    charges = st.number_input("Gastos médicos", 0, 100000, 5000)
+charges = st.number_input("Gastos médicos", 0, 100000, 5000)
 
-    st.markdown("</div>", unsafe_allow_html=True)
+st.markdown("</div>", unsafe_allow_html=True)
 
 # ============================================================
 # PREDICCIÓN
