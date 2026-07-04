@@ -313,4 +313,4 @@ st.markdown("""
 <div class="footer-text">
 📊 Sistema de Riesgo Actuarial con IA • ISC 2026
 </div>
-""", unsafe_allow_html=True)   ves mi codigo, me genera en mi pantalla lo que ves, el problema es ese cuadro blanco quiero quitarlo dime como
+""", unsafe_allow_html=True)   
