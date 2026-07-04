@@ -16,7 +16,7 @@ st.set_page_config(
 )
 
 # ============================================================
-# CSS MEJORADO (TODO EL TEXTO DEL FORMULARIO EN BLANCO)
+# CSS MEJORADO (LABELS VISIBLES + SIN TABLA VACÍA)
 # ============================================================
 st.markdown("""
 <style>
@@ -70,18 +70,18 @@ html, body, [data-testid="stAppViewContainer"], [data-testid="stApp"] {
 
 /* ─── TÍTULO DENTRO DEL FORMULARIO ─── */
 .form-card h3 {
-    color: #ffffff !important;
+    color: #0d47a1 !important;
     font-size: 1.4rem;
     margin-bottom: 1.5rem;
-    border-bottom: 2px solid rgba(255,255,255,0.4);
+    border-bottom: 2px solid #e3f2fd;
     padding-bottom: 0.8rem;
 }
 
 /* ═══════════════════════════════════════════════════════════
-   🔥 TODOS LOS TEXTOS DEL FORMULARIO EN BLANCO
+   🔥 LABELS DEL FORMULARIO EN AZUL OSCURO (VISIBLES)
    ═══════════════════════════════════════════════════════════ */
 
-/* Labels de todos los inputs */
+/* Labels de todos los inputs - AZUL OSCURO para que se vean */
 .stNumberInput label,
 .stRadio label,
 .stSelectbox label,
@@ -91,17 +91,18 @@ html, body, [data-testid="stAppViewContainer"], [data-testid="stApp"] {
 [data-testid="stNumberInput"] label,
 [data-testid="stRadio"] label,
 [data-testid="stSelectbox"] label {
-    color: #ffffff !important;
-    font-weight: 600 !important;
+    color: #0d47a1 !important;
+    font-weight: 700 !important;
     font-size: 1rem !important;
 }
 
-/* Texto de los radio buttons (male, female, yes, no) */
+/* Texto de los radio buttons (male, female, yes, no) - AZUL OSCURO */
 .stRadio [role="radiogroup"] label,
 .stRadio [data-testid="stMarkdownContainer"] p,
 .stRadio span[data-baseweb="radio"] div,
 .stRadio div[role="radio"] {
-    color: #ffffff !important;
+    color: #1565c0 !important;
+    font-weight: 600 !important;
 }
 
 /* Opciones del selectbox */
@@ -110,10 +111,13 @@ html, body, [data-testid="stAppViewContainer"], [data-testid="stApp"] {
     color: #333333 !important;
 }
 
-/* Input numbers */
+/* Input numbers - texto dentro del campo */
 .stNumberInput input {
     color: #333333 !important;
     font-weight: 600 !important;
+    background: #f5f9ff !important;
+    border: 2px solid #bbdefb !important;
+    border-radius: 12px !important;
 }
 
 /* Placeholder y texto dentro de inputs */
