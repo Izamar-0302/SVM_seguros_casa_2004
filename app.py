@@ -98,14 +98,14 @@ html, body, [data-testid="stAppViewContainer"], [data-testid="stApp"] {
 .stRadio [data-testid="stMarkdownContainer"] p,
 .stRadio span[data-baseweb="radio"] div,
 .stRadio div[role="radio"] {
-    color: #1565c0 !important;
+    color: #ffffff !important;
     font-weight: 600 !important;
 }
 
 /* Opciones del selectbox */
 .stSelectbox [data-testid="stMarkdownContainer"] p,
 .stSelectbox div[data-baseweb="select"] span {
-    color: #333333 !important;
+    color: #ffffff !important;
 }
 
 /* Input numbers */
