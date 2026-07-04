@@ -125,7 +125,6 @@ if st.button("🔍 Predecir riesgo"):
         <div class="result-card">
             <h3>Resultado del análisis</h3>
             <div class="cluster-badge">{resultado}</div>
-            <p>Cluster asignado: {cluster}</p>
         </div>
     """, unsafe_allow_html=True)
 
